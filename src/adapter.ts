@@ -1,5 +1,5 @@
 import { MoveCallTransaction, SuiTransactionResponse } from '@mysten/sui.js';
-import { MartianApis, Permission, SignMessageResponseType } from './types';
+import { ConnectResponseType, MartianApis, Permission, SignMessageResponseType } from './types';
 
 declare const window: {
   martian: { sui: MartianApis };
@@ -12,9 +12,9 @@ export class MartianWalletAdapter {
   wallet: MartianApis | null = null;
 
   @ensureWalletExist()
-  async connect(): Promise<void> {
+  async connect(): Promise<ConnectResponseType> {
     const wallet = this.wallet as MartianApis;
-    const resData = await wallet.connect([Permission.VIEW_ACCOUNT, Permission.SUGGEST_TX]);
+    return await wallet.connect([Permission.VIEW_ACCOUNT, Permission.SUGGEST_TX]);
   }
 
   @ensureWalletExist()
@@ -56,7 +56,7 @@ export class MartianWalletAdapter {
 
 
 function guideToInstallExtension() {
-  throw new Error('You need to install Suiet Extension from Chrome Store firstly!');
+  throw new Error('You need to install Martian Extension from Chrome Store');
 }
 
 function ensureWalletExist() {
