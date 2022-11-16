@@ -1,0 +1,23 @@
+{
+  "name": "@martian/sui-wallet-adapter",
+  "version": "1.0.0",
+  "description": "Martian Sui wallet adapater for dapps",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/martian-dao/sui-wallet-adapter.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/martian-dao/sui-wallet-adapter/issues"
+  },
+  "homepage": "https://github.com/martian-dao/sui-wallet-adapter#readme",
+  "dependencies": {
+    "@mysten/sui.js": "^0.16.0",
+    "@mysten/wallet-adapter-base": "^0.3.2"
+  }
+}
