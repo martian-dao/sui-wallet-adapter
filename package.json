@@ -7,49 +7,53 @@
     "browser": "dist/index.js",
     "types": "dist/index.d.ts",
     "files": [
-      "dist"
+        "dist"
     ],
     "scripts": {
-      "dev": "rollup -c rollup.config.ts --watch",
-      "build": "npm run clean && cross-env NODE_ENV=production rollup -c rollup.config.ts",
-      "clean": "rimraf dist/"
+        "dev": "rollup -c rollup.config.ts --watch",
+        "build": "npm run clean && cross-env NODE_ENV=production rollup -c rollup.config.ts",
+        "clean": "rimraf dist/"
     },
     "dependencies": {
-      "@mysten/sui.js": "0.16.0",
-      "@wallet-standard/features": "1.0.0",
-      "borsh": "^0.7.0",
-      "buffer": "^6.0.3"
+        "@mysten/sui.js": "0.16.0",
+        "@mysten/wallet-adapter-base": "^0.3.4",
+        "@mysten/wallet-standard": "^0.2.3",
+        "@wallet-standard/base": "^1.0.1",
+        "@wallet-standard/features": "1.0.0",
+        "borsh": "^0.7.0",
+        "buffer": "^6.0.3",
+        "rxjs-compat": "^6.6.7"
     },
     "devDependencies": {
-      "@babel/core": "^7.19.3",
-      "@babel/plugin-transform-runtime": "^7.19.1",
-      "@babel/preset-env": "^7.19.3",
-      "@rollup/plugin-babel": "^5.3.1",
-      "@rollup/plugin-commonjs": "^22.0.2",
-      "@rollup/plugin-node-resolve": "^14.1.0",
-      "@rollup/plugin-typescript": "^8.5.0",
-      "core-js": "^3.25.4",
-      "cross-env": "^7.0.3",
-      "rimraf": "^3.0.2",
-      "rollup": "^2.79.1",
-      "rollup-plugin-polyfill-node": "^0.10.2",
-      "rollup-plugin-terser": "^7.0.2",
-      "tslib": "^2.4.0",
-      "typescript": "^4.8.4"
+        "@babel/core": "^7.19.3",
+        "@babel/plugin-transform-runtime": "^7.19.1",
+        "@babel/preset-env": "^7.19.3",
+        "@rollup/plugin-babel": "^5.3.1",
+        "@rollup/plugin-commonjs": "^22.0.2",
+        "@rollup/plugin-node-resolve": "^14.1.0",
+        "@rollup/plugin-typescript": "^8.5.0",
+        "core-js": "^3.25.4",
+        "cross-env": "^7.0.3",
+        "rimraf": "^3.0.2",
+        "rollup": "^2.79.1",
+        "rollup-plugin-polyfill-node": "^0.10.2",
+        "rollup-plugin-terser": "^7.0.2",
+        "tslib": "^2.4.0",
+        "typescript": "^4.8.4"
     },
     "repository": {
-      "type": "git",
-      "url": "git+https://github.com/martian-dao/sui-wallet-adapter"
+        "type": "git",
+        "url": "git+https://github.com/martian-dao/sui-wallet-adapter"
     },
     "bugs": {
-      "url": "https://github.com/martian-dao/sui-wallet-adapter/issues"
+        "url": "https://github.com/martian-dao/sui-wallet-adapter/issues"
     },
     "homepage": "https://github.com/martian-dao/sui-wallet-adapter",
     "keywords": [
-      "sui",
-      "martianwallet",
-      "martian",
-      "wallet",
-      "adapter"
+        "sui",
+        "martianwallet",
+        "martian",
+        "wallet",
+        "adapter"
     ]
-  }
+}
