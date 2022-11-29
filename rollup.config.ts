@@ -1,7 +1,6 @@
 import resolvePlugin from '@rollup/plugin-node-resolve';
 import typescript from '@rollup/plugin-typescript';
 import cjs2es from '@rollup/plugin-commonjs';
-import nodePolyfills from 'rollup-plugin-polyfill-node';
 import { defineConfig } from 'rollup';
 import {getBabelOutputPlugin} from '@rollup/plugin-babel';
 import { terser } from 'rollup-plugin-terser';
@@ -30,8 +29,6 @@ const config = defineConfig({
   plugins: [
     // compile ts files
     typescript(),
-    // polyfill nodejs built-in and global modules
-    nodePolyfills(),
     // fetch node_modules contents
     resolvePlugin({
       browser: true, // specify that it's built for browser
