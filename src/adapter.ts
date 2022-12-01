@@ -2,7 +2,6 @@ import { MoveCallTransaction, SuiTransactionResponse } from '@mysten/sui.js';
 import { MartianApis, Permission, SignMessageResponseType } from './types';
 import { Wallet, SUI_DEVNET_CHAIN, SUI_TESTNET_CHAIN, IdentifierArray, WalletAccount, ConnectOutput, SuiSignAndExecuteTransactionInput, SuiSignAndExecuteTransactionOutput } from "@mysten/wallet-standard";
 import { WalletVersion } from '@wallet-standard/base';
-
 import {
   ConnectFeature,
   EventsFeature,
@@ -52,13 +51,12 @@ export class MartianWalletAdapter implements Wallet {
   }
 
   on() {
-    // Your wallet's events on implementation.
+    // Not implemented
     return () => { }
   };
 
   @ensureWalletExist()
   async connect(): Promise<ConnectOutput> {
-    // Your wallet's connect implementation
     const wallet = this.wallet as MartianApis;
     const connectResp = await wallet.connect([Permission.VIEW_ACCOUNT, Permission.SUGGEST_TX]);
     const acc: WalletAccount = {
@@ -76,9 +74,15 @@ export class MartianWalletAdapter implements Wallet {
 
   @ensureWalletExist()
   async signAndExecuteTransaction(transaction: SuiSignAndExecuteTransactionInput): Promise<SuiSignAndExecuteTransactionOutput> {
-    // Your wallet's signAndExecuteTransaction implementation
     const wallet = this.wallet as MartianApis;
-    return await wallet.signAndExecuteTransaction(transaction.transaction) as SuiSignAndExecuteTransactionOutput;
+    const data = await wallet.signAndExecuteTransaction(transaction.transaction);
+    const resp = {
+      certificate: data.EffectsCert.certificate,
+      effects: data.EffectsCert.effects.effects,
+      timestamp_ms: null,
+      parsed_data: null,
+    }
+    return resp as SuiSignAndExecuteTransactionOutput;
   };
 
 
@@ -97,7 +101,14 @@ export class MartianWalletAdapter implements Wallet {
   @ensureWalletExist()
   async executeMoveCall(transaction: MoveCallTransaction): Promise<SuiTransactionResponse> {
     const wallet = this.wallet as MartianApis;
-    return await wallet.executeMoveCall(transaction);
+    const data = await wallet.executeMoveCall(transaction);
+    const resp = {
+      certificate: data.EffectsCert.certificate,
+      effects: data.EffectsCert.effects.effects,
+      timestamp_ms: null,
+      parsed_data: null,
+    }
+    return resp;
   }
 
   @ensureWalletExist()

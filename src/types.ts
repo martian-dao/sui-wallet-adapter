@@ -1,12 +1,12 @@
-import { MoveCallTransaction, SuiTransactionResponse, SignableTransaction } from "@mysten/sui.js";
+import { MoveCallTransaction, CertifiedTransaction, SignableTransaction, SuiCertifiedTransactionEffects } from "@mysten/sui.js";
 
 export type ConnectResponseType = {
-    address: string;
-    id: number;
-    method: string;
-    publicKey: string;
-    status: number;
-    tabId: number;
+  address: string;
+  id: number;
+  method: string;
+  publicKey: string;
+  status: number;
+  tabId: number;
 }
 
 export type SignMessageResponseType = {
@@ -22,12 +22,19 @@ export enum Permission {
   SUGGEST_TX = 'suggestTransactions',
 }
 
+export type WalletTxnResponse = {
+  EffectsCert: {
+    certificate: CertifiedTransaction;
+    effects: SuiCertifiedTransactionEffects;
+  };
+}
+
 export interface MartianApis {
   connect: (perms: Permission[]) => Promise<ConnectResponseType>;
   getAccounts: () => Promise<GetAccountsType>;
-  executeMoveCall: (transaction: MoveCallTransaction) => Promise<SuiTransactionResponse>;
+  executeMoveCall: (transaction: MoveCallTransaction) => Promise<WalletTxnResponse>;
   disconnect: () => Promise<void>;
   signMessage: (input: Uint8Array | string) => Promise<SignMessageResponseType>;
   getPublicKey: () => Promise<string>;
-  signAndExecuteTransaction: (transaction: SignableTransaction) => Promise<SuiTransactionResponse>;
+  signAndExecuteTransaction: (transaction: SignableTransaction) => Promise<WalletTxnResponse>;
 }
