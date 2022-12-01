@@ -1,23 +1,29 @@
 import { MoveCallTransaction, SuiTransactionResponse } from '@mysten/sui.js';
 import { MartianApis, Permission, SignMessageResponseType } from './types';
 import { Wallet, SUI_DEVNET_CHAIN, SUI_TESTNET_CHAIN, IdentifierArray, WalletAccount, ConnectOutput, SuiSignAndExecuteTransactionInput, SuiSignAndExecuteTransactionOutput } from "@mysten/wallet-standard";
-import { WalletVersion, WalletIcon } from '@wallet-standard/base';
+import { WalletVersion } from '@wallet-standard/base';
 
 import {
   ConnectFeature,
   EventsFeature,
-  EventsOnMethod,
   SuiSignAndExecuteTransactionFeature,
 } from "@mysten/wallet-standard";
 
 export class MartianWalletAdapter implements Wallet {
-  icon!: WalletIcon;
   chains: IdentifierArray = [SUI_DEVNET_CHAIN, SUI_TESTNET_CHAIN];
-  accounts: WalletAccount[] = [];
   name = 'Martian Sui Wallet';
   connecting: boolean = false;
   connected: boolean = false;
   wallet: MartianApis | null = null;
+  #accounts: WalletAccount[] = []
+
+  get icon(): any {
+    return "https://cdn.martianwallet.xyz/assets/icon.png";
+  }
+
+  get accounts(): WalletAccount[] {
+    return this.#accounts;
+  }
 
   get version() {
     // Return the version of the Wallet Standard this implements (in this case, 1.0.0).
@@ -28,38 +34,40 @@ export class MartianWalletAdapter implements Wallet {
     return {
       "standard:connect": {
         version: "1.0.0",
-        connect: this.connect,
+        connect: async () => {
+          const resp: ConnectOutput = await this.connect()
+          this.#accounts = resp.accounts as WalletAccount[];
+          return resp;
+        },
       },
       "standard:events": {
         version: "1.0.0",
-        on: this.on,
+        on: () => this.on(),
       },
       "sui:signAndExecuteTransaction": {
         version: "1.0.0",
-        signAndExecuteTransaction: this.signAndExecuteTransaction,
+        signAndExecuteTransaction: async (transaction) => await this.signAndExecuteTransaction(transaction),
       },
     };
   }
 
-  on: EventsOnMethod = () => {
+  on() {
     // Your wallet's events on implementation.
-    const x = () => { };
-    return x;
+    return () => { }
   };
 
   @ensureWalletExist()
   async connect(): Promise<ConnectOutput> {
     // Your wallet's connect implementation
     const wallet = this.wallet as MartianApis;
-    const { accounts } = await wallet.connect([Permission.VIEW_ACCOUNT, Permission.SUGGEST_TX]);
+    const connectResp = await wallet.connect([Permission.VIEW_ACCOUNT, Permission.SUGGEST_TX]);
     const acc: WalletAccount = {
-      address: accounts[0].address,
-      publicKey: new TextEncoder().encode(accounts[0].publicKey),
+      address: connectResp.address,
+      publicKey: new TextEncoder().encode(connectResp.publicKey),
       chains: [SUI_DEVNET_CHAIN, SUI_TESTNET_CHAIN],
       features: ["standard:connect", "standard:events", "sui:signAndExecuteTransaction"]
     }
     const accArr: WalletAccount[] = [acc];
-    this.accounts = accArr;
     const x: ConnectOutput = {
       accounts: accArr
     };

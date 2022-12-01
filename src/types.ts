@@ -1,15 +1,12 @@
 import { MoveCallTransaction, SuiTransactionResponse, SignableTransaction } from "@mysten/sui.js";
 
 export type ConnectResponseType = {
-  accounts: Array<{
     address: string;
     id: number;
     method: string;
     publicKey: string;
     status: number;
     tabId: number;
-  }
-  >
 }
 
 export type SignMessageResponseType = {
