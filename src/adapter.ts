@@ -1,5 +1,5 @@
 import { MoveCallTransaction, SuiTransactionResponse } from '@mysten/sui.js';
-import { MartianApis, Permission, SignMessageResponseType } from './types';
+import { AllPermissionsType, MartianApis, Permission, SignMessageResponseType } from './types';
 import { Wallet, SUI_DEVNET_CHAIN, SUI_TESTNET_CHAIN, IdentifierArray, WalletAccount, ConnectOutput, SuiSignAndExecuteTransactionInput, SuiSignAndExecuteTransactionOutput } from "@mysten/wallet-standard";
 import { WalletVersion } from '@wallet-standard/base';
 import {
@@ -54,6 +54,13 @@ export class MartianWalletAdapter implements Wallet {
     // Not implemented
     return () => { }
   };
+
+  @ensureWalletExist()
+  async hasPermissions(permissions: AllPermissionsType): Promise<boolean> {
+    const wallet = this.wallet as MartianApis;
+    const hasPermission = await wallet.hasPermissions(permissions);
+    return hasPermission;
+  }
 
   @ensureWalletExist()
   async connect(): Promise<ConnectOutput> {
