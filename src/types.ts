@@ -28,10 +28,8 @@ export enum Permission {
 }
 
 export type WalletTxnResponse = {
-  EffectsCert: {
-    certificate: CertifiedTransaction;
-    effects: SuiCertifiedTransactionEffects;
-  };
+  certificate: CertifiedTransaction;
+  effects: SuiCertifiedTransactionEffects;
 };
 
 export interface MartianApis {

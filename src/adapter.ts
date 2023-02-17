@@ -84,8 +84,8 @@ export class MartianWalletAdapter implements Wallet {
     const wallet = this.wallet as MartianApis;
     const data = await wallet.signAndExecuteTransaction(transaction.transaction);
     const resp = {
-      certificate: data.EffectsCert.certificate,
-      effects: data.EffectsCert.effects.effects,
+      certificate: data.certificate,
+      effects: data.effects.effects,
       timestamp_ms: null,
       parsed_data: null,
     }
@@ -110,8 +110,8 @@ export class MartianWalletAdapter implements Wallet {
     const wallet = this.wallet as MartianApis;
     const data = await wallet.executeMoveCall(transaction);
     const resp = {
-      certificate: data.EffectsCert.certificate,
-      effects: data.EffectsCert.effects.effects,
+      certificate: data.certificate,
+      effects: data.effects.effects,
       timestamp_ms: null,
       parsed_data: null,
     }
