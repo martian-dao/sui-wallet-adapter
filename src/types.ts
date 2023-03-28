@@ -1,9 +1,14 @@
 import {
   MoveCallTransaction,
-  CertifiedTransaction,
-  SignableTransaction,
-  SuiCertifiedTransactionEffects,
+  SuiTransactionBlockResponseOptions,
+  TransactionBlock,
 } from "@mysten/sui.js";
+import { SerializedTransactionDataBuilder } from "@mysten/sui.js/dist/builder/TransactionBlockData";
+
+import {
+  SuiSignAndExecuteTransactionBlockInput,
+  SuiSignAndExecuteTransactionBlockOutput,
+} from "@mysten/wallet-standard";
 
 export type ConnectResponseType = {
   address: string;
@@ -19,6 +24,16 @@ export type SignMessageResponseType = {
   signedMessage: Uint8Array;
 };
 
+export type SignAndExecutePayload = {
+  transactionBlockSerialized: string;
+  options: any;
+};
+
+export type SignAndExecuteBlockInput = {
+  transactionBlock: TransactionBlock;
+  options: SuiTransactionBlockResponseOptions;
+};
+
 export type GetAccountsType = Array<string>;
 
 export type AllPermissionsType = ["viewAccount", "suggestTransactions"];
@@ -27,22 +42,14 @@ export enum Permission {
   SUGGEST_TX = "suggestTransactions",
 }
 
-export type WalletTxnResponse = {
-  certificate: CertifiedTransaction;
-  effects: SuiCertifiedTransactionEffects;
-};
-
 export interface MartianApis {
   connect: (perms: Permission[]) => Promise<ConnectResponseType>;
   getAccounts: () => Promise<GetAccountsType>;
-  executeMoveCall: (
-    transaction: MoveCallTransaction
-  ) => Promise<WalletTxnResponse>;
   disconnect: () => Promise<void>;
   signMessage: (input: Uint8Array | string) => Promise<SignMessageResponseType>;
   getPublicKey: () => Promise<string>;
   hasPermissions: (permissions: AllPermissionsType) => Promise<boolean>;
-  signAndExecuteTransaction: (
-    transaction: SignableTransaction
-  ) => Promise<WalletTxnResponse>;
+  signAndExecuteTransactionBlock: (
+    payload: SignAndExecutePayload
+  ) => Promise<SuiSignAndExecuteTransactionBlockOutput>;
 }
