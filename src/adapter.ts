@@ -12,12 +12,10 @@ import {
   IdentifierArray,
   WalletAccount,
   SuiSignAndExecuteTransactionBlockOutput,
+  SuiSignTransactionBlockInput,
+  SuiSignTransactionBlockOutput,
 } from "@mysten/wallet-standard";
 import { WalletVersion } from "@wallet-standard/base";
-import {
-  SuiTransactionBlockResponseOptions,
-  TransactionBlock,
-} from "@mysten/sui.js";
 import { ConnectOutput } from "@wallet-standard/features";
 
 export class MartianWalletAdapter implements Wallet {
@@ -60,6 +58,11 @@ export class MartianWalletAdapter implements Wallet {
         signAndExecuteTransactionBlock: async (
           input: SignAndExecuteBlockInput
         ) => await this.signAndExecuteTransactionBlock(input),
+      },
+      "sui:signTransactionBlock": {
+        version: "1.0.0",
+        signTransactionBlock: async (input: SuiSignTransactionBlockInput) =>
+          await this.signTransactionBlock(input),
       },
     };
   }
@@ -110,6 +113,17 @@ export class MartianWalletAdapter implements Wallet {
       options: input.options,
     });
     return data as SuiSignAndExecuteTransactionBlockOutput;
+  }
+
+  @ensureWalletExist()
+  async signTransactionBlock(
+    input: SuiSignTransactionBlockInput
+  ): Promise<SuiSignTransactionBlockOutput> {
+    const wallet = this.wallet as MartianApis;
+    const data = await wallet.signTransactionBlock({
+      transactionBlockSerialized: input.transactionBlock.serialize(),
+    });
+    return data as SuiSignTransactionBlockOutput;
   }
 
   @ensureWalletExist()

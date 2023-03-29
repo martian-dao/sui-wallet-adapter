@@ -1,6 +1,6 @@
 {
     "name": "@martianwallet/sui-wallet-adapter",
-    "version": "0.2.0",
+    "version": "0.2.1",
     "description": "Integration of Martian Wallet into the Sui Wallet Adapter",
     "main": "dist/index.cjs",
     "module": "dist/index.js",
