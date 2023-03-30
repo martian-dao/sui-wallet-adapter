@@ -1,13 +1,11 @@
 import {
-  MoveCallTransaction,
   SuiTransactionBlockResponseOptions,
   TransactionBlock,
 } from "@mysten/sui.js";
-import { SerializedTransactionDataBuilder } from "@mysten/sui.js/dist/builder/TransactionBlockData";
 
 import {
-  SuiSignAndExecuteTransactionBlockInput,
   SuiSignAndExecuteTransactionBlockOutput,
+  SuiSignTransactionBlockOutput,
 } from "@mysten/wallet-standard";
 
 export type ConnectResponseType = {
@@ -34,6 +32,10 @@ export type SignAndExecuteBlockInput = {
   options: SuiTransactionBlockResponseOptions;
 };
 
+export type SignTransactionBlockInput = {
+  transactionBlockSerialized: string;
+};
+
 export type GetAccountsType = Array<string>;
 
 export type AllPermissionsType = ["viewAccount", "suggestTransactions"];
@@ -52,4 +54,7 @@ export interface MartianApis {
   signAndExecuteTransactionBlock: (
     payload: SignAndExecutePayload
   ) => Promise<SuiSignAndExecuteTransactionBlockOutput>;
+  signTransactionBlock: (
+    payload: SignTransactionBlockInput
+  ) => Promise<SuiSignTransactionBlockOutput>;
 }
