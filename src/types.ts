@@ -5,6 +5,8 @@ import {
 
 import {
   SuiSignAndExecuteTransactionBlockOutput,
+  SuiSignMessageInput,
+  SuiSignMessageOutput,
   SuiSignTransactionBlockOutput,
 } from "@mysten/wallet-standard";
 
@@ -48,7 +50,7 @@ export interface MartianApis {
   connect: (perms: Permission[]) => Promise<ConnectResponseType>;
   getAccounts: () => Promise<GetAccountsType>;
   disconnect: () => Promise<void>;
-  signMessage: (input: Uint8Array | string) => Promise<SignMessageResponseType>;
+  signMessage: (input: SuiSignMessageInput) => Promise<SuiSignMessageOutput>;
   getPublicKey: () => Promise<string>;
   hasPermissions: (permissions: AllPermissionsType) => Promise<boolean>;
   signAndExecuteTransactionBlock: (

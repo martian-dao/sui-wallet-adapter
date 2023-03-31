@@ -3,7 +3,6 @@ import {
   MartianApis,
   Permission,
   SignAndExecuteBlockInput,
-  SignMessageResponseType,
 } from "./types";
 import {
   Wallet,
@@ -14,6 +13,8 @@ import {
   SuiSignAndExecuteTransactionBlockOutput,
   SuiSignTransactionBlockInput,
   SuiSignTransactionBlockOutput,
+  SuiSignMessageInput,
+  SuiSignMessageOutput,
 } from "@mysten/wallet-standard";
 import { WalletVersion } from "@wallet-standard/base";
 import { ConnectOutput } from "@wallet-standard/features";
@@ -63,6 +64,11 @@ export class MartianWalletAdapter implements Wallet {
         version: "1.0.0",
         signTransactionBlock: async (input: SuiSignTransactionBlockInput) =>
           await this.signTransactionBlock(input),
+      },
+      "sui:signMessage": {
+        version: "1.0.0",
+        signMessage: async (input: SuiSignMessageInput) =>
+          await this.signMessage(input),
       },
     };
   }
@@ -140,8 +146,8 @@ export class MartianWalletAdapter implements Wallet {
 
   @ensureWalletExist()
   async signMessage(
-    input: Uint8Array | string
-  ): Promise<SignMessageResponseType> {
+    input: SuiSignMessageInput
+  ): Promise<SuiSignMessageOutput> {
     const wallet = this.wallet as MartianApis;
     return await wallet.signMessage(input);
   }
