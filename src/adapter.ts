@@ -92,10 +92,11 @@ export class MartianWalletAdapter implements Wallet {
       Permission.VIEW_ACCOUNT,
       Permission.SUGGEST_TX,
     ]);
+    const activeChain: any = await wallet.network();
     const acc: WalletAccount = {
       address: connectResp.address,
       publicKey: new TextEncoder().encode(connectResp.publicKey),
-      chains: [SUI_DEVNET_CHAIN, SUI_TESTNET_CHAIN],
+      chains: [activeChain || SUI_TESTNET_CHAIN],
       features: [
         "standard:connect",
         "standard:events",

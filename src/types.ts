@@ -49,6 +49,7 @@ export enum Permission {
 export interface MartianApis {
   connect: (perms: Permission[]) => Promise<ConnectResponseType>;
   getAccounts: () => Promise<GetAccountsType>;
+  network: () => Promise<string>;
   disconnect: () => Promise<void>;
   signMessage: (input: SuiSignMessageInput) => Promise<SuiSignMessageOutput>;
   getPublicKey: () => Promise<string>;
