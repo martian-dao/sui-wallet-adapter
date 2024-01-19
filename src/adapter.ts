@@ -13,6 +13,9 @@ import {
   SuiSignAndExecuteTransactionBlockOutput,
   SuiSignTransactionBlockInput,
   SuiSignTransactionBlockOutput,
+  SuiSignPersonalMessageInput,
+  SuiSignPersonalMessageOutput,
+  SuiSignPersonalMessageMethod,
   SuiSignMessageInput,
   SuiSignMessageOutput,
 } from "@mysten/wallet-standard";
@@ -69,6 +72,11 @@ export class MartianWalletAdapter implements Wallet {
         version: "1.0.0",
         signMessage: async (input: SuiSignMessageInput) =>
           await this.signMessage(input),
+      },
+      "sui:signPersonalMessage": {
+        version: "1.0.0",
+        signPersonalMessage: async (input: SuiSignPersonalMessageInput) =>
+          await this.signPersonalMessage(input),
       },
     };
   }
@@ -146,11 +154,21 @@ export class MartianWalletAdapter implements Wallet {
   }
 
   @ensureWalletExist()
-  async signMessage(
-    input: SuiSignMessageInput
-  ): Promise<SuiSignMessageOutput> {
+  async signMessage(input: SuiSignMessageInput): Promise<SuiSignMessageOutput> {
     const wallet = this.wallet as MartianApis;
     return await wallet.signMessage(input);
+  }
+
+  @ensureWalletExist()
+  async signPersonalMessage(
+    input: SuiSignPersonalMessageInput
+  ): Promise<SuiSignPersonalMessageOutput> {
+    const wallet = this.wallet as MartianApis;
+    const resp = await wallet.signMessage(input);
+    return {
+      bytes: resp.messageBytes,
+      signature: resp.signature,
+    };
   }
 
   @ensureWalletExist()
