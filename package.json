@@ -1,6 +1,6 @@
 {
     "name": "@martianwallet/sui-wallet-adapter",
-    "version": "0.2.3",
+    "version": "0.2.4",
     "description": "Integration of Martian Wallet into the Sui Wallet Adapter",
     "main": "dist/index.cjs",
     "module": "dist/index.js",
@@ -16,7 +16,7 @@
     "dependencies": {
         "@mysten/sui.js": "0.30.0",
         "@mysten/wallet-adapter-base": "0.7.0",
-        "@mysten/wallet-standard": "0.5.0",
+        "@mysten/wallet-standard": "0.10.0",
         "@wallet-standard/base": "^1.0.1",
         "@wallet-standard/features": "1.0.0",
         "borsh": "^0.7.0",
